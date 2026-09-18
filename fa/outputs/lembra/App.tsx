@@ -6,6 +6,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { StatusBar } from 'expo-status-bar';
 import { Task, reminderDate, visibleTasks } from './src/tasks';
 import { cancelReminder, scheduleReminder } from './src/reminders';
+import { Backup, createBackup, mergeBackup } from './src/backup';
+import { exportBackupFile, pickBackupFile } from './src/backupFiles';
+import { restoreReminders } from './src/restoreReminders';
+import { ProfileMenu } from './src/ProfileMenu';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 const THEME_KEY = 'jarvis.theme.v1';
@@ -129,6 +133,52 @@ export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [backupOpen, setBackupOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [backupBusy, setBackupBusy] = useState(false);
+  const backupLock = useRef(false);
+  const [backupStatus, setBackupStatus] = useState('');
+  async function exportData() {
+    if (backupLock.current) return;
+    backupLock.current = true; setBackupBusy(true);
+    try {
+      await exportBackupFile(createBackup(tasks, themeMode));
+      setBackupStatus('Compartilhamento encerrado. Confira o arquivo na pasta escolhida; cancelar não salva uma cópia.');
+    } catch (error) { Alert.alert('Não foi possível exportar', error instanceof Error ? error.message : 'Tente novamente.'); }
+    finally { backupLock.current = false; setBackupBusy(false); }
+  }
+  async function importData() {
+    if (backupLock.current) return;
+    backupLock.current = true; setBackupBusy(true);
+    try {
+      const backup = await pickBackupFile();
+      if (!backup) return;
+      const preview = mergeBackup(tasks, backup);
+      const themeLabel = themeOptions.find(t => t.value === backup.preferences.theme)?.label;
+      const confirmed = await new Promise<boolean>(resolve => Alert.alert('Restaurar backup?',
+        'Backup de ' + new Date(backup.createdAt).toLocaleString('pt-BR') + '.\n\n' + preview.added.length + ' tarefas serão adicionadas. ' + preview.skipped + ' já existem e serão mantidas como estão.\n\nTema: ' + themeLabel + '. Nenhuma tarefa atual será apagada.',
+        [{ text: 'Cancelar', style: 'cancel', onPress: () => resolve(false) }, { text: 'Restaurar', onPress: () => resolve(true) }],
+        { cancelable: true, onDismiss: () => resolve(false) }));
+      if (confirmed) await applyBackup(backup);
+    } catch (error) { Alert.alert('Não foi possível restaurar', error instanceof Error ? error.message : 'Tente novamente.'); }
+    finally { backupLock.current = false; setBackupBusy(false); }
+  }
+  async function applyBackup(backup: Backup) {
+    const merged = mergeBackup(tasks, backup);
+    await persist(merged.tasks);
+    let preferenceWarning = '';
+    try { await AsyncStorage.setItem(THEME_KEY, backup.preferences.theme); setThemeMode(backup.preferences.theme); }
+    catch { preferenceWarning = '\nNão foi possível restaurar o tema.'; }
+    let reminderStatus = '';
+    try {
+      const result = await restoreReminders(merged.added);
+      reminderStatus = result.scheduled + ' lembretes futuros agendados.';
+      if (result.missing) reminderStatus += '\n' + result.missing + ' avisos não foram agendados. Confira as permissões e edite/salve essas tarefas para tentar novamente. O iPhone limita os avisos pendentes.';
+    } catch { reminderStatus = 'As tarefas foram salvas, mas houve falha ao agendar avisos. Confira as permissões e edite/salve as tarefas para reagendar.'; }
+    const message = merged.added.length + ' tarefas adicionadas. ' + merged.skipped + ' mantidas sem alteração.\n' + reminderStatus + preferenceWarning;
+    setBackupStatus(message);
+    Alert.alert('Restauração concluída', message);
+  }
   const [filter, setFilter] = useState('Hoje');
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Task | null>(null);
@@ -175,7 +225,7 @@ export default function App() {
   }
   const list = visibleTasks(tasks, filter, now);
   return <SafeAreaProvider><View style={s.page}><SafeAreaView style={s.page} pointerEvents={opening ? "none" : "auto"} accessibilityElementsHidden={opening} importantForAccessibility={opening ? "no-hide-descendants" : "auto"}><StatusBar animated style={isDark ? "light" : "dark"} />
-    <View style={s.header}><Text style={s.brand}>Jarvis<Text style={{ color: colors.accent }}>.</Text></Text><Text style={s.muted}>Um pouco mais de espaço na sua cabeça.</Text><View style={s.themeRow} accessibilityLabel="Aparência">{themeOptions.map(option => <Pressable key={option.value} accessibilityRole="radio" accessibilityLabel={option.value === 'system' ? 'Seguir tema do iPhone' : 'Tema ' + option.label} accessibilityState={{ checked: themeMode === option.value, disabled: !themeReady || themeSaving }} disabled={!themeReady || themeSaving} onPress={() => chooseTheme(option.value)} style={[s.themeChoice, themeMode === option.value && s.themeSelected]}><Text style={[s.themeText, themeMode === option.value && { color: colors.text, fontWeight: '600' }]}>{option.label}</Text></Pressable>)}</View></View>
+    <View style={s.header}><View style={s.headerTop}><Text style={s.brand}>Jarvis<Text style={{ color: colors.accent }}>.</Text></Text><Pressable accessibilityRole="button" accessibilityLabel="Abrir menu" accessibilityState={{ expanded: menuOpen }} disabled={!ready || !themeReady || busy || themeSaving} style={s.link} onPress={() => setMenuOpen(true)}><View style={{ gap: 5 }} accessible={false}>{[0, 1, 2].map(line => <View key={line} style={{ width: 23, height: 2, borderRadius: 1, backgroundColor: colors.text }} />)}</View></Pressable></View><Text style={s.muted}>Um pouco mais de espaço na sua cabeça.</Text><View style={s.themeRow} accessibilityLabel="Aparência">{themeOptions.map(option => <Pressable key={option.value} accessibilityRole="radio" accessibilityLabel={option.value === 'system' ? 'Seguir tema do iPhone' : 'Tema ' + option.label} accessibilityState={{ checked: themeMode === option.value, disabled: !themeReady || themeSaving }} disabled={!themeReady || themeSaving} onPress={() => chooseTheme(option.value)} style={[s.themeChoice, themeMode === option.value && s.themeSelected]}><Text style={[s.themeText, themeMode === option.value && { color: colors.text, fontWeight: '600' }]}>{option.label}</Text></Pressable>)}</View></View>
     <View style={s.tabs}>{filters.map(f => <Pressable accessibilityRole="tab" accessibilityState={{ selected: f === filter }} key={f} onPress={() => setFilter(f)} style={[s.tab, f === filter && s.active]}><Text style={{ color: f === filter ? colors.onPrimary : colors.text }}>{f}</Text></Pressable>)}</View>
     <Text style={s.count}>{ready ? `${list.length} ${list.length === 1 ? 'tarefa' : 'tarefas'}` : 'Carregando…'}</Text>
     <FlatList data={list} keyExtractor={t => t.id} contentContainerStyle={s.list} ListEmptyComponent={ready ? <View style={s.empty}><Text style={s.sun}>☀</Text><Text style={s.heading}>{filter === 'Concluídas' ? 'Cada passo conta.' : 'Espaço para o que importa.'}</Text><Text style={[s.muted, { textAlign: 'center', marginTop: 12 }]}>{filter === 'Concluídas' ? 'Suas tarefas concluídas aparecerão aqui.' : 'Adicione uma tarefa e escolha quando receber o lembrete.'}</Text></View> : null} renderItem={({ item }) => <View style={s.card}>
@@ -183,6 +233,18 @@ export default function App() {
       <View style={s.actions}>{!item.done && <Pressable disabled={busy} style={s.link} onPress={() => change(item, false)}><Text style={s.actionText}>Concluir</Text></Pressable>}<Pressable disabled={busy} style={s.link} onPress={() => Alert.alert('Excluir tarefa?', item.title, [{ text: 'Cancelar', style: 'cancel' }, { text: 'Excluir', style: 'destructive', onPress: () => change(item, true) }])}><Text style={{ color: colors.danger }}>Excluir</Text></Pressable></View>
     </View>} />
     <Pressable disabled={!ready || busy} style={[s.primary, (!ready || busy) && { opacity: 0.5 }]} onPress={() => showForm()}><Text style={s.white}>＋ Nova tarefa</Text></Pressable>
+    <ProfileMenu visible={menuOpen} onClose={() => setMenuOpen(false)} onBackup={() => setBackupOpen(true)} colors={colors} dark={isDark} />
+    <Modal visible={backupOpen} animationType="slide" presentationStyle="fullScreen" onRequestClose={() => !backupBusy && setBackupOpen(false)}><SafeAreaView style={s.page}><ScrollView contentContainerStyle={s.form}>
+      <Text style={s.heading}>Backup</Text>
+      <Text style={[s.muted, { marginTop: 16 }]}>Guarde uma cópia das suas tarefas e do tema escolhido. Ao exportar, escolha “Salvar em Arquivos” e selecione uma pasta no iPhone ou iCloud Drive.</Text>
+      <Text style={s.helper}>O arquivo contém suas tarefas em texto legível. Guarde em um local pessoal. Este backup é manual.</Text>
+      <Pressable accessibilityRole="button" disabled={backupBusy} style={[s.primary, backupBusy && { opacity: 0.5 }]} onPress={exportData}><Text style={s.white}>Exportar backup</Text></Pressable>
+      <Pressable accessibilityRole="button" disabled={backupBusy} style={[s.primary, backupBusy && { opacity: 0.5 }]} onPress={importData}><Text style={s.white}>Restaurar backup</Text></Pressable>
+      <Text style={s.helper}>A restauração adiciona tarefas que faltam, preserva as atuais e aplica o tema do backup. Tarefas concluídas ou com aviso passado não recebem novas notificações.</Text>
+      {backupBusy && <Text accessibilityLiveRegion="polite" style={[s.muted, { marginTop: 16 }]}>Aguarde a conclusão…</Text>}
+      {!!backupStatus && <Text style={[s.muted, { marginTop: 16 }]}>{backupStatus}</Text>}
+      <Pressable accessibilityRole="button" disabled={backupBusy} style={s.cancel} onPress={() => setBackupOpen(false)}><Text style={s.actionText}>Voltar</Text></Pressable>
+    </ScrollView></SafeAreaView></Modal>
     <Modal visible={open} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => !busy && setOpen(false)}><SafeAreaView style={s.page}><KeyboardAvoidingView style={{ flex: 1 }} behavior="padding"><ScrollView contentContainerStyle={s.form} keyboardShouldPersistTaps="handled">
       <Text style={s.heading}>{editing ? 'Editar tarefa' : 'O que você quer lembrar?'}</Text>
       <Text style={s.label}>Título</Text><TextInput accessibilityLabel="Título" style={s.input} placeholderTextColor={colors.muted} selectionColor={colors.text} keyboardAppearance={isDark ? "dark" : "light"} placeholder="Ex.: Levar o carro para revisão" value={title} onChangeText={setTitle} maxLength={100} />
@@ -199,6 +261,7 @@ export default function App() {
   </View></SafeAreaProvider>;
 }
 const createStyles = (colors: typeof palettes.light) => StyleSheet.create({
+  headerTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   themeRow: { flexDirection: 'row', marginTop: 20, padding: 4, borderRadius: 12, backgroundColor: colors.subtle, gap: 4 },
   themeChoice: { flex: 1, minHeight: 44, alignItems: 'center', justifyContent: 'center', borderRadius: 9, borderWidth: 1, borderColor: 'transparent' },
   themeSelected: { backgroundColor: colors.surface, borderColor: colors.accent },

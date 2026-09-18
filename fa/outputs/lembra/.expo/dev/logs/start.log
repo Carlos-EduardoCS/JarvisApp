@@ -261,3 +261,73 @@
 {"_e":"metro:client_log","_t":1789749508231,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
 {"_e":"metro:client_log","_t":1789749508231,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
 {"_e":"metro:server_log","_t":1789749571462,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.Exponent","iPhone","60"]}
+{"_e":"metro:bundling:started","_t":1789752347589,"id":"q","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789752347591,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752347617,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752347750,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752347962,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752348063,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752348163,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752348264,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752348363,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752348463,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789752348588,"id":"q","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789752348660,"id":"q","total":1,"ms":1070.0055}
+{"_e":"metro:client_log","_t":1789752349234,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789752349234,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:server_log","_t":1789752412817,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.Exponent","iPhone","60"]}
+{"_e":"metro:bundling:started","_t":1789752770492,"id":"s","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789752770494,"id":"s","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789752770585,"id":"s","total":1,"ms":91.3221}
+{"_e":"metro:client_log","_t":1789752771426,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789752771443,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:bundling:started","_t":1789752931606,"id":"u","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789752931607,"id":"u","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789752931686,"id":"u","total":1,"ms":79.0639}
+{"_e":"metro:client_log","_t":1789752932587,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789752932588,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:bundling:started","_t":1789753200237,"id":"x","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789753200238,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753200247,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753200379,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753201609,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753201709,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753201809,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753201920,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753202020,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753202174,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753202331,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753202518,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753202738,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753202881,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753203652,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753203779,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753204623,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753204825,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:progress","_t":1789753205551,"id":"x","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789753205619,"id":"x","total":1,"ms":5381.2286}
+{"_e":"metro:client_log","_t":1789753206658,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789753206659,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:bundling:started","_t":1789753238684,"id":"z","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789753238684,"id":"z","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789753238779,"id":"z","total":1,"ms":95.4109}
+{"_e":"metro:client_log","_t":1789753239600,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789753239600,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:server_log","_t":1789753313453,"level":"error","data":["[timeout] connection terminated with Device for app='%s' on device='%s' after not responding for %s seconds.","host.exp.Exponent","iPhone","60"]}
+{"_e":"metro:bundling:started","_t":1789753445648,"id":"11","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789753445649,"id":"11","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789753445736,"id":"11","total":1,"ms":87.3951}
+{"_e":"metro:client_log","_t":1789753446791,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789753446791,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1789753453122,"level":"warn","data":["DateTimePicker: `onChange` is deprecated. Use `onValueChange`, `onDismiss`, and `onNeutralButtonPress` instead."]}
+{"_e":"metro:bundling:started","_t":1789753500551,"id":"13","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789753500551,"id":"13","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789753500616,"id":"13","total":1,"ms":65.1969}
+{"_e":"metro:client_log","_t":1789753501728,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789753501728,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:bundling:started","_t":1789754454764,"id":"17","platform":"ios","environment":null,"entry":"index.ts"}
+{"_e":"metro:bundling:progress","_t":1789754454765,"id":"17","progress":0,"total":1,"current":0}
+{"_e":"metro:bundling:done","_t":1789754454854,"id":"17","total":1,"ms":89.431}
+{"_e":"metro:client_log","_t":1789754455974,"level":"warn","data":["expo-notifications: Android Push notifications (remote notifications) functionality provided by expo-notifications was removed from Expo Go with the release of SDK 53. Use a development build instead of Expo Go. Learn more at https://docs.expo.dev/develop/development-builds/introduction/."]}
+{"_e":"metro:client_log","_t":1789754455975,"level":"warn","data":["`expo-notifications` functionality is not fully supported in Expo Go:\nWe recommend you instead use a development build to avoid limitations. Learn more: https://expo.fyi/dev-client."]}
+{"_e":"metro:client_log","_t":1789754459746,"level":"warn","data":["DateTimePicker: `onChange` is deprecated. Use `onValueChange`, `onDismiss`, and `onNeutralButtonPress` instead."]}
