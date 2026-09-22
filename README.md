@@ -8,6 +8,23 @@ Desenvolvido com **React Native, Expo e TypeScript**, o projeto começou para us
 
 > **Status:** primeira versão funcional em desenvolvimento, executada no iPhone pelo Expo Go. Ainda não publicada na App Store. As próximas etapas incluem refinamentos visuais e novas integrações.
 
+## Telas do aplicativo
+
+Tema claro, tema escuro e cadastro de tarefas com endereço, opção de reunião e lembretes.
+
+<table>
+  <tr>
+    <th>Tema claro</th>
+    <th>Tema escuro</th>
+    <th>Nova tarefa</th>
+  </tr>
+  <tr>
+    <td><img src="photos/IMG_7911.PNG" alt="Tela inicial do Jarvis no tema claro" width="240" /></td>
+    <td><img src="photos/IMG_7913.PNG" alt="Tela inicial do Jarvis no tema escuro" width="240" /></td>
+    <td><img src="photos/IMG_7912.PNG" alt="Cadastro de tarefa com endereço, opção de reunião, data e horário" width="240" /></td>
+  </tr>
+</table>
+
 ## Como o Jarvis ajuda no dia a dia
 
 | Situação | Como usar o Jarvis |
