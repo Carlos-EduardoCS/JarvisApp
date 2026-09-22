@@ -1,0 +1,50 @@
+# Dependências e cache de desenvolvimento
+node_modules/
+.expo/
+.expo-shared/
+.cache/
+.npm/
+work/
+
+# Builds gerados
+dist/
+web-build/
+coverage/
+*.tsbuildinfo
+*.log
+*.ipa
+*.apk
+*.aab
+
+# Configuração local e credenciais
+.env
+.env.*
+!.env.example
+*.p12
+*.p8
+*.key
+*.mobileprovision
+*.jks
+*.keystore
+credentials.json
+
+# Backups e fotos pessoais gerados pelo Jarvis
+Jarvis-backup-*.json
+jarvis-profile-*
+
+# Sistema e editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Nome antigo incorreto do arquivo de exclusão
+gitignore
+
+# Arquivos nativos e temporários gerados
+/ios/
+/android/
+.kotlin/
+.metro-health-check*
+*.pem
+*.orig.*
